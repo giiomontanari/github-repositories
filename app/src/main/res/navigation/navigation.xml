@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/gitRepositoriesFragment">
+
+    <fragment
+        android:id="@+id/gitRepositoriesFragment"
+        android:label="gitRepositoriesFragment"
+        android:name="com.example.gitrepositories.ui.view.GitRepositoriesFragment"
+        tools:layout="@layout/fragment_gitrepositores">
+        <action
+            android:id="@+id/action_gitRepositoriesFragment_to_gitItemRepositoresFragment"
+            app:destination="@+id/gitItemRepositoriesFragment"/>
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/gitItemRepositoriesFragment"
+        android:label="gitItemRepositoriesFragment"
+        android:name="com.example.gitrepositories.ui.view.GitItemRepositoriesFragment"
+        tools:layout="@layout/fragment_gititemrepositories"/>
+</navigation>
