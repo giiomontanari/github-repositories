@@ -20,5 +20,12 @@
         android:id="@+id/gitItemRepositoriesFragment"
         android:label="gitItemRepositoriesFragment"
         android:name="com.example.gitrepositories.ui.view.GitItemRepositoriesFragment"
-        tools:layout="@layout/fragment_gititemrepositories"/>
+        tools:layout="@layout/fragment_gititemrepositories">
+
+        <action
+            android:id="@+id/action_popback_to_gitRepositories"
+            app:destination="@id/gitRepositoriesFragment"
+            app:popUpTo="@id/gitRepositoriesFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

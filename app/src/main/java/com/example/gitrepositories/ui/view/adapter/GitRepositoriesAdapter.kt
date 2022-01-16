@@ -20,7 +20,6 @@ class GitRepositoriesAdapter(
         val view = LayoutInflater.from(parent.context).inflate(
             R.layout.item_gitrepositories, parent, false
         )
-
         return GitRepositoriesViewHolder(view)
     }
 

@@ -11,4 +11,9 @@ class GitRepository(
         val result = api.fetchGitHub()
         emit(result)
     }
+
+    suspend fun fetchPullRequests(nameRepo: String?, nameAuthor: String?) = flow {
+        val result = api.fetchPullRequests(nameRepo, nameAuthor)
+        emit(result)
+    }
 }
