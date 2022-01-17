@@ -6,15 +6,18 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.gitrepositories.R
+import com.example.gitrepositories.databinding.FragmentGititemrepositoriesBinding
 import com.example.gitrepositories.ui.view.adapter.GitItemRepositoriesAdapter
 import com.example.gitrepositories.ui.viewmodel.GitItemRepositoriesViewModel
-import kotlinx.android.synthetic.main.fragment_gititemrepositories.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GitItemRepositoriesFragment : Fragment(R.layout.fragment_gititemrepositories) {
 
     private val viewModel: GitItemRepositoriesViewModel by viewModel()
+
+    private val viewBinding by viewBinding<FragmentGititemrepositoriesBinding>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,15 +47,15 @@ class GitItemRepositoriesFragment : Fragment(R.layout.fragment_gititemrepositori
         val bundle = requireArguments()
         viewModel.getPullRequests(bundle.getString(NAME), bundle.getString(AUTHOR_NAME))
         viewModel.pullRequestsReceived.observe(this, Observer {
-            recycler_pull.layoutManager = LinearLayoutManager(context)
-            recycler_pull.adapter = GitItemRepositoriesAdapter(it)
+            viewBinding.recyclerPull.layoutManager = LinearLayoutManager(context)
+            viewBinding.recyclerPull.adapter = GitItemRepositoriesAdapter(it)
         })
     }
 
     private fun setupToolbar() {
         val bundle = requireArguments()
-        toolbar_home.title = bundle.getString(NAME)
-        toolbar_home.setNavigationOnClickListener {
+        viewBinding.toolbarHome.title = bundle.getString(NAME)
+        viewBinding.toolbarHome.setNavigationOnClickListener {
             it.findNavController().navigate(R.id.action_popback_to_gitRepositories)
         }
     }

@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.gitrepositories.R
-import kotlinx.android.synthetic.main.fragment_gititemrepositories.*
-import kotlinx.android.synthetic.main.fragment_gititemwebview.*
+import com.example.gitrepositories.databinding.FragmentGititemwebviewBinding
 
 class GitItemWebViewFragment : Fragment(R.layout.fragment_gititemwebview) {
+
+    private val viewBinding by viewBinding<FragmentGititemwebviewBinding>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,7 +37,7 @@ class GitItemWebViewFragment : Fragment(R.layout.fragment_gititemwebview) {
 
     private fun openWebview() {
         val bundle = requireArguments()
-        bundle.getString(URL)?.let { webview.loadUrl(it) }
+        bundle.getString(URL)?.let { viewBinding.webview.loadUrl(it) }
     }
 
     private fun setupToolbar() {
@@ -44,7 +46,7 @@ class GitItemWebViewFragment : Fragment(R.layout.fragment_gititemwebview) {
             bundle.getString(REPO_NAME),
             bundle.getString(AUTHOR_NAME)
         )
-        toolbar_webview.setNavigationOnClickListener {
+        viewBinding.toolbarWebview.setNavigationOnClickListener {
             it.findNavController().navigate(
                 R.id.action_popback_to_gitItemRepositories,
                 bundleSend
