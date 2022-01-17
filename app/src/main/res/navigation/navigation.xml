@@ -27,5 +27,24 @@
             app:destination="@id/gitRepositoriesFragment"
             app:popUpTo="@id/gitRepositoriesFragment"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_to_webviewFragment"
+            app:destination="@+id/gitItemWebviewFragment"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/gitItemWebviewFragment"
+        android:label="gitItemWebviewFragment"
+        android:name="com.example.gitrepositories.ui.view.GitItemWebViewFragment"
+        tools:layout="@layout/fragment_gititemwebview">
+
+        <action
+            android:id="@+id/action_popback_to_gitItemRepositories"
+            app:destination="@id/gitItemRepositoriesFragment"
+            app:popUpTo="@id/gitItemRepositoriesFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
 </navigation>

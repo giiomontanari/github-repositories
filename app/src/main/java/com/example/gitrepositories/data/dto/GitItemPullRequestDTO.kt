@@ -12,5 +12,9 @@ data class GitItemPullRequestDTO(
     @SerializedName("body")
     val body: String,
     @SerializedName("created_at")
-    val dateCreated: String
+    val dateCreated: String,
+    @SerializedName("html_url")
+    val htmlUrl: String,
+    @SerializedName("base")
+    val head: BaseDTO
 )

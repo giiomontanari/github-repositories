@@ -32,8 +32,8 @@ class GitItemRepositoriesFragment : Fragment(R.layout.fragment_gititemrepositori
         private const val AUTHOR_NAME = "AUTHOR_NAME"
 
         fun buildBundle(
-            name: String,
-            authorName: String
+            name: String?,
+            authorName: String?
         ): Bundle = Bundle().apply {
             putString(NAME, name)
             putString(AUTHOR_NAME, authorName)
