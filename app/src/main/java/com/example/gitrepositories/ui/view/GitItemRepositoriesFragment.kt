@@ -11,6 +11,7 @@ import com.example.gitrepositories.R
 import com.example.gitrepositories.databinding.FragmentGititemrepositoriesBinding
 import com.example.gitrepositories.ui.view.adapter.GitItemRepositoriesAdapter
 import com.example.gitrepositories.ui.viewmodel.GitItemRepositoriesViewModel
+import com.example.gitrepositories.ui.viewmodel.GitViewStates
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GitItemRepositoriesFragment : Fragment(R.layout.fragment_gititemrepositories) {
@@ -48,7 +49,18 @@ class GitItemRepositoriesFragment : Fragment(R.layout.fragment_gititemrepositori
         viewModel.getPullRequests(bundle.getString(NAME), bundle.getString(AUTHOR_NAME))
         viewModel.pullRequestsReceived.observe(this, Observer {
             viewBinding.recyclerPull.layoutManager = LinearLayoutManager(context)
-            viewBinding.recyclerPull.adapter = GitItemRepositoriesAdapter(it)
+            when(it) {
+                is GitViewStates.Error -> {
+                    viewBinding.loading.visibility = View.GONE
+                }
+                is GitViewStates.Loading -> {
+                    viewBinding.loading.visibility = View.VISIBLE
+                }
+                is GitViewStates.Success -> {
+                    viewBinding.loading.visibility = View.GONE
+                    viewBinding.recyclerPull.adapter = GitItemRepositoriesAdapter(it.data)
+                }
+            }
         })
     }
 

@@ -15,18 +15,19 @@ class GitRepositoriesViewModel(
     private val repository: GitRepository
 ) : ViewModel() {
 
-    private val _githubReceived = MutableLiveData<GitHubRepositoriesDTO>()
+    private val _githubReceived = MutableLiveData<GitViewStates<GitHubRepositoriesDTO>>()
 
-    val githubReceived: LiveData<GitHubRepositoriesDTO> = _githubReceived
+    val githubReceived: LiveData<GitViewStates<GitHubRepositoriesDTO>> = _githubReceived
 
     fun getGithub() {
         viewModelScope.launch {
+            _githubReceived.value = GitViewStates.Loading()
             repository.fetchGithub()
                 .catch {
-                    Timber.d("Error")
+                    _githubReceived.value = GitViewStates.Error()
                 }
                 .collect { response ->
-                    _githubReceived.value = response
+                    _githubReceived.value = GitViewStates.Success(response)
                 }
         }
     }

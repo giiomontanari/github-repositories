@@ -1,7 +1,6 @@
 package com.example.gitrepositories.ui.view.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +10,7 @@ import com.example.gitrepositories.R
 import com.example.gitrepositories.data.dto.GitItemPullRequestDTO
 import com.example.gitrepositories.databinding.ItemGititemrepositoriesBinding
 import com.example.gitrepositories.ui.view.GitItemWebViewFragment
+import com.example.gitrepositories.utils.DateConverter
 
 class GitItemRepositoriesAdapter(
     private val items: List<GitItemPullRequestDTO>
@@ -36,6 +36,8 @@ class GitItemRepositoriesAdapter(
                 binding.nameAutor.text = item.user.login
                 binding.titlePr.text = item.titlePullRequest
                 binding.bodyPr.text = item.body
+                binding.datePr.text = DateConverter().converterDate(item.dateCreated)
+
                 this.setOnClickListener {
                     val bundle = GitItemWebViewFragment.buildBundle(
                         item.htmlUrl,

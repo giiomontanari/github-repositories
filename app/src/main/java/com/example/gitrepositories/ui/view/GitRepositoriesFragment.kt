@@ -1,6 +1,7 @@
 package com.example.gitrepositories.ui.view
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +10,7 @@ import com.example.gitrepositories.R
 import com.example.gitrepositories.databinding.FragmentGitrepositoresBinding
 import com.example.gitrepositories.ui.view.adapter.GitRepositoriesAdapter
 import com.example.gitrepositories.ui.viewmodel.GitRepositoriesViewModel
+import com.example.gitrepositories.ui.viewmodel.GitViewStates
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GitRepositoriesFragment : Fragment(R.layout.fragment_gitrepositores) {
@@ -26,7 +28,18 @@ class GitRepositoriesFragment : Fragment(R.layout.fragment_gitrepositores) {
     private fun setupObservers() {
         viewModel.githubReceived.observe(this, Observer {
             viewBinding.recyclerGithub.layoutManager = LinearLayoutManager(context)
-            viewBinding.recyclerGithub.adapter = GitRepositoriesAdapter(it.items)
+            when(it) {
+                is GitViewStates.Error -> {
+                    viewBinding.loading.visibility = View.GONE
+                }
+                is GitViewStates.Loading -> {
+                    viewBinding.loading.visibility = View.VISIBLE
+                }
+                is GitViewStates.Success -> {
+                    viewBinding.loading.visibility = View.GONE
+                    viewBinding.recyclerGithub.adapter = GitRepositoriesAdapter(it.data.items)
+                }
+            }
         })
     }
 }
