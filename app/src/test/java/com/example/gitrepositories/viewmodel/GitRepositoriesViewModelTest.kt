@@ -4,6 +4,7 @@ import androidx.lifecycle.Observer
 import com.example.gitrepositories.data.dto.GitHubRepositoriesDTO
 import com.example.gitrepositories.data.repository.GitRepository
 import com.example.gitrepositories.ui.viewmodel.GitRepositoriesViewModel
+import com.example.gitrepositories.ui.viewmodel.GitViewStates
 import io.mockk.*
 import org.junit.Before
 import org.junit.Test
@@ -24,7 +25,7 @@ class GitRepositoriesViewModelTest : KoinTest {
 
     @Test
     fun whenFetchGithub_ShouldCallMethodFetchGithubOnObserver() {
-        val observer = mockk<Observer<GitHubRepositoriesDTO>>()
+        val observer = mockk<Observer<GitViewStates<GitHubRepositoriesDTO>>>()
 
         coEvery { repository.fetchGithub() } returns mockk(relaxUnitFun = true)
 
