@@ -1,32 +1,31 @@
 package com.example.gitrepositories
 
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.gitrepositories.data.dto.GitHubItemsDTO
+import com.example.gitrepositories.data.dto.GitHubRepositoriesDTO
 import com.example.gitrepositories.data.dto.OwnerDTO
 import com.example.gitrepositories.data.repository.GitRepository
+import com.example.gitrepositories.platform.KoinTestApp
 import com.example.gitrepositories.ui.view.GitRepositoriesFragment
 import com.example.gitrepositories.ui.viewmodel.GitRepositoriesViewModel
+import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.flow.flow
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.core.KoinApplication
-import org.koin.core.context.loadKoinModules
-import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
-import org.koin.core.context.unloadKoinModules
 import org.koin.dsl.module
 
 @RunWith(AndroidJUnit4::class)
 class GitRepositoriesFragmentTest {
-
-    lateinit var koinApp: KoinApplication
 
     private lateinit var viewModel: GitRepositoriesViewModel
 
@@ -39,15 +38,28 @@ class GitRepositoriesFragmentTest {
 
     @Before
     fun setUp() {
-        viewModel = GitRepositoriesViewModel(repository)
         mockKoin()
-        launch()
     }
 
     @Test
     fun givenSuccessResponse_ShouldDisplayRecyclerView() {
+
+        coEvery { repository.fetchGithub() } returns flow {
+            emit(GitHubRepositoriesDTO(
+                items = createList()
+            ))
+        }
+
+        prepare()
+
+        launch()
+
         onView(withId(R.id.recycler_github))
             .check(matches(isDisplayed()))
+    }
+
+    private fun prepare() {
+        viewModel = GitRepositoriesViewModel(repository)
     }
 
     private fun createList(): List<GitHubItemsDTO> {
@@ -94,11 +106,11 @@ class GitRepositoriesFragmentTest {
     }
 
     private fun mockKoin() {
-        koinApp = startKoin {}
-        loadKoinModules(module {
-            single {
-                viewModel
-            }
-        })
+        ApplicationProvider.getApplicationContext<KoinTestApp>()
+            .injectModule(module {
+                single {
+                    viewModel
+                }
+            })
     }
 }

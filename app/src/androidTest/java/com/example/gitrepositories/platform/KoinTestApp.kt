@@ -13,7 +13,6 @@ class KoinTestApp: Application() {
         startKoin {
             androidLogger()
             androidContext(this@KoinTestApp)
-            modules(emptyList())
         }
     }
 

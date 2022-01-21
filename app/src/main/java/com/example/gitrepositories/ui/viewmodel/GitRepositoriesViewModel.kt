@@ -9,7 +9,6 @@ import com.example.gitrepositories.data.repository.GitRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class GitRepositoriesViewModel(
     private val repository: GitRepository
