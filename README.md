@@ -8,7 +8,7 @@ Projeto para verificar as API do Github e trazer os repositórios mais populares
 - `Funcionalidade 2`: Verificação de pull requests do repositório selecionado
 - `Funcionalidade 3`: Abertura de uma webview com o pull request selecionado na tela anterior
 
-## Tecnologias utilizadas
+## :love_you_gesture: Tecnologias utilizadas
 
 - MVVM
 - Retrofit
